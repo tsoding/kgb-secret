@@ -1,4 +1,3 @@
-#define _GNU_SOURCE
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +8,14 @@
 #include <fcntl.h>
 
 #include <unistd.h>
+
+char *mememem(char *haystack, size_t haystack_len, char *needle, size_t needle_len) {
+    for (size_t i = 0; i < haystack_len; i++) {
+        if (i + needle_len > haystack_len) return NULL;
+        if (strncmp(&haystack[i], needle, needle_len) == 0) return &haystack[i];
+    }
+    return NULL;
+}
 
 typedef void (*F)(void);
 
@@ -33,8 +40,7 @@ int main(int argc, char *argv[])
                        PROT_READ | PROT_WRITE | PROT_EXEC,
                        MAP_PRIVATE, fd, 0);
 
-    // TODO: memmem is not portable
-    char *hello = memmem(data, len, "Hello", 5);
+    char *hello = mememem(data, len, "Hello", 5);
     if (hello) {
         memcpy(hello, "Blyat", 5);
     }
