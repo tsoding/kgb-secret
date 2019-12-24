@@ -12,7 +12,7 @@
 char *mememem(char *haystack, size_t haystack_len, char *needle, size_t needle_len) {
     for (size_t i = 0; i < haystack_len; i++) {
         if (i + needle_len > haystack_len) return NULL;
-        if (strncmp(&haystack[i], needle, needle_len) == 0) return &haystack[i];
+        if (memcmp(&haystack[i], needle, needle_len) == 0) return &haystack[i];
     }
     return NULL;
 }
